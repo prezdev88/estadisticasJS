@@ -1,0 +1,34 @@
+.grafico{
+    float:left;
+    width: 50%;
+    height: 300px;
+}
+
+body{
+    background-color: #0118bc;
+}
+
+.rojo{
+    color: #ff0009;
+}
+
+.verde{
+    color: #09b100;
+}
+
+.azul{
+    color: #0118bc;
+}
+
+.resaltado{
+    font-weight: bold;
+}
+
+.col1{
+    width: 100px;
+}
+
+h1{
+    padding: 20px;
+    text-align: center;
+}

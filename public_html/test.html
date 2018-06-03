@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Estadísticas JS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script type="text/javascript" src="js/Estadistica.js"></script>
+    <script type="text/javascript" src="js/Contadores.js"></script>
+    <script type="text/javascript" src="js/Grafico.js"></script>
+
+    <script type="text/javascript" src="js/loader.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <script>
+        var est = new Estadistica();
+
+        function procesar_nota(e, nota) {
+            if (e.keyCode === 13) {
+                if (nota.trim() !== "") {
+                    nota = parseFloat(nota);
+
+                    if (nota >= 1 && nota <= 7){
+                        est.addNota(nota);
+                        promedio = est.getPromedio();
+                        mayor = est.getNotaMayor();
+                        menor = est.getNotaMenor();
+
+                        var input_nota = document.getElementById("nota");
+                        var div_cont_notas = document.getElementById("cont_notas");
+                        var div_cont_rojos = document.getElementById("cont_rojos");
+                        var div_cont_azules = document.getElementById("cont_azules");
+                        var div_nota_alta = document.getElementById("nota_alta");
+                        var div_nota_baja = document.getElementById("nota_baja");
+                        var div_promedio = document.getElementById("promedio");
+                        var div_sietes = document.getElementById("sietes");
+                        var div_rango1 = document.getElementById("rango1");
+                        var div_rango2 = document.getElementById("rango2");
+                        var div_rango3 = document.getElementById("rango3");
+                        var div_rango4 = document.getElementById("rango4");
+                        var div_rango5 = document.getElementById("rango5");
+                        var div_rango6 = document.getElementById("rango6");
+
+                        input_nota.value = "";
+
+                        div_cont_notas.innerHTML = est.c.cont_notas;
+                        div_promedio.innerHTML = parseFloat(promedio).toFixed(1);
+                        div_cont_rojos.innerHTML = est.c.cont_rojos + " (" + est.getPorcentajeRojos() + "%)";
+                        div_cont_azules.innerHTML = est.c.cont_azules + " (" + est.getPorcentajeAzules() + "%)";
+                        div_nota_alta.innerHTML = mayor;
+                        div_nota_baja.innerHTML =  menor;
+                        div_sietes.innerHTML = est.c.cont_sietes;
+                        div_rango1.innerHTML = est.c.rango1;
+                        div_rango2.innerHTML = est.c.rango2;
+                        div_rango3.innerHTML = est.c.rango3;
+                        div_rango4.innerHTML = est.c.rango4;
+                        div_rango5.innerHTML = est.c.rango5;
+                        div_rango6.innerHTML = est.c.rango6;
+
+                        est.dibujarGraficoNotas("graficoAzulesRojos");
+                        est.dibujarGraficoRangos("graficoRangos");
+                    }
+                }
+
+            }
+        }
+    </script>
+    <div class="container">
+        <h1>Estadísticas [TEST]</h1>
+
+        <div class="col-md-12">
+            <input class="col-md-12 form-control" placeholder="Nota:" type="number" id="nota" onkeydown="procesar_nota(event, value)">
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td class="resaltado">Pruebas:</td>
+                    <td>
+                        <div id="cont_notas" class="resaltado"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Promedio:</td>
+                    <td>
+                        <div id="promedio"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rojo resaltado">Rojos:</td>
+                    <td>
+                        <div id="cont_rojos" class="rojo resaltado"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="azul resaltado">Azules:</td>
+                    <td>
+                        <div id="cont_azules" class="azul resaltado"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="verde">Nota más alta:</td>
+                    <td>
+                        <div id="nota_alta" class="verde"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rojo">Nota más baja:</td>
+                    <td>
+                        <div id="nota_baja" class="rojo"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="verde resaltado">Cantidad de 7:</td>
+                    <td>
+                        <div id="sietes" class="verde resaltado"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td>[6-7]:</td>
+                    <td>
+                        <div id="rango1"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>[5-6[:</td>
+                    <td><div id="rango2"></div></td>
+                </tr>
+                <tr>
+                    <td>[4-5[:</td>
+                    <td>
+                        <div id="rango3"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>[3-4[:</td>
+                    <td>
+                        <div id="rango4"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>[2-3[:</td>
+                    <td>
+                        <div id="rango5"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>[1-2[:</td>
+                    <td>
+                        <div id="rango6"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-12">
+            <div class="grafico" id="graficoAzulesRojos"></div>
+            <div class="grafico" id="graficoRangos"></div>
+        </div>
+    </div>
+</body>
+
+</html>
